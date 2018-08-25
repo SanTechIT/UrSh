@@ -1,0 +1,129 @@
+@charset "UTF-8";
+/* CSS Document */
+* {
+	box-sizing: border-box;
+	font-family: "HelveticaNeue", Helvetica, Arial, sans-serif;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+	z-index: 1;
+}
+body {
+	background-color: rgb(106, 135, 149);
+	width: 100%;
+}
+p, h1, h2, h3, h4{
+	text-decoration-color: #333;
+	margin: 0px;
+}
+h4.navtitle {
+	margin-left: 20px;
+	line-height: 60px;
+	display: inline;
+}
+span.user {
+	margin-right:20px;
+
+}
+nav {
+	height: auto;
+}
+#content-main {
+	width: 100%;
+	margin-top: 0px;
+	background-color: rgb(106, 135, 149);
+}
+footer {
+	position: relative;
+}
+footer > p {
+	position: relative;
+	float:left;
+	z-index: 10;
+    bottom: 0px;
+	margin-bottom: 5px;
+	background-color: cadetblue;
+	padding: 5px;
+	width: 100%;
+	text-align: center;
+}
+.float-right {
+	float:right;
+}
+.float-left {
+	float:left;
+}
+.float-none {
+	float:none;
+}
+.browsebutton {
+	margin-right:10px;
+}
+h3.title {
+	padding:10px;
+}
+.db-text {
+	color:#546E7A;
+}
+.full-height {
+	position: fixed;
+	height:100vh;
+}
+nav {
+	position: fixed;
+	display: block;
+	left:0;
+	right: 0;
+	top:0;
+	z-index:2;
+}
+.content {
+ padding-top:69px;
+}
+.addcartbox{
+	position: relative;; 
+	right:10px !important; 
+	float:none; 
+	top:7px; 
+	height: auto;
+	border-radius:2px;
+	display: block;
+	z-index:0;
+}
+.addcartboxm {
+	position:fixed; 
+	bottom:0px;
+}
+.imagebox {
+	width:auto;
+}
+.fill {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden
+}
+.fill img {
+    flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%
+}
+.pimg{
+	width:100%; 
+	margin-top:7px; 
+	z-index:1;
+}
+.inlineb {
+	display:inline-block;
+}
+.fwid {
+	width: 100%;
+}
+.z0 {
+	z-index:0;
+}
+.np {
+	padding:0;
+}
+.nm {
+	margin:0;
+}

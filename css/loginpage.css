@@ -1,0 +1,14 @@
+.loginbox {
+    max-height: 0px;
+    overflow: hidden;
+    transition: 1s;
+}
+.createbox{
+    max-height: 0px;
+    overflow: hidden;
+    transition: 1s;
+}
+.choosebtns {
+    margin-top:50px;
+    overflow: hidden;
+}
