@@ -7,6 +7,17 @@ try {
     echo "<p>Error connecting to database!</p>" . $e;
 }
 */
+if (isset($_SESSION["loggedIn"])){
+    if($_SESSION["loggedIn"]) {
+    } else {
+        header("Location: /admin/login.php");
+        exit();
+    }
+} else {
+    $_SESSION["loggedIn"] = false;
+    header("Location: /admin/login.php");
+    exit();
+}
 $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 /* https://stackoverflow.com/questions/6768793/get-the-full-url-in-php - ax. */
 

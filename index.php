@@ -98,15 +98,19 @@ SQL REQUEST GOES HERE
 
 echo '<br>' . $_SERVER['REMOTE_ADDR'];
 echo '<br>' . date("m/d/Y");
+echo '<br>' . date("h:i:s");
 echo '<br>' . $_SERVER['HTTP_REFERER'];
 
 
 if (isset($details->bogon)){
     echo '<br> Bogon Ip!';
-    /*
-        If the IP is "Bogon" it is part a IP space that is yet to be assigned and often is a local IP address.
-        Because of this, there is no Geo-IP data available and therefore it only the IP of the visitor is stored.
-    */
+    $sth = $dbh->prepare("INSERT INTO Visits (Visit_Ip,Visit_Url_Id,Visit_Date,Visit_Time,Visit_Exact_Path,Visit_Refer) VALUES (:bip,'1',:date,:time,:epath,:refer)");
+    $sth->bindValue(':bip', $details->bogon, PDO::PARAM_STR);
+    $sth->bindValue(':date', date("m/d/Y"), PDO::PARAM_STR);
+    $sth->bindValue(':time', date("h:i:s"), PDO::PARAM_STR);
+    $sth->bindValue(':epath', $url, PDO::PARAM_STR);
+    $sth->bindValue(':refer',$_SERVER['HTTP_REFERER'], PDO::PARAM_STR);
+    $sth->execute();
 
 } else {
     /*
@@ -135,7 +139,7 @@ Core Functions (State: Workable)
 
 Admin Functions (State: None)
 
-1. Login
+1. Login DONE
 2. Normal User
     A. Add / Manage / Delete Urls
     B. See Stats on owned Urls

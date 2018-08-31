@@ -2,7 +2,7 @@
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
 -- Schema ursh
@@ -22,7 +22,9 @@ DROP TABLE IF EXISTS `ursh`.`Users` ;
 
 CREATE TABLE IF NOT EXISTS `ursh`.`Users` (
   `User_Id` INT NOT NULL AUTO_INCREMENT,
+  `User_First_Name` VARCHAR(45) NOT NULL,
   `Username` VARCHAR(128) NOT NULL,
+  `User_Email` VARCHAR(45) NULL,
   `Password_Hash` VARCHAR(128) NOT NULL,
   `User_Active` TINYINT NOT NULL,
   `User_Admin` TINYINT NOT NULL,
@@ -43,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `ursh`.`Urls` (
   `Url_Active` TINYINT NULL,
   `Url_User_Id` INT NOT NULL,
   PRIMARY KEY (`Url_Id`, `Url_User_Id`),
-  INDEX `fk_Urls_Users_idx` (`Url_User_Id` ASC),
+  INDEX `fk_Urls_Users_idx` (`Url_User_Id` ASC) VISIBLE,
   CONSTRAINT `fk_Urls_Users`
     FOREIGN KEY (`Url_User_Id`)
     REFERENCES `ursh`.`Users` (`User_Id`)
@@ -59,14 +61,17 @@ DROP TABLE IF EXISTS `ursh`.`Visits` ;
 
 CREATE TABLE IF NOT EXISTS `ursh`.`Visits` (
   `Visit_Id` INT NOT NULL AUTO_INCREMENT,
-  `Visit_Ip` VARCHAR(45) NOT NULL,
+  `Visit_Ip` VARCHAR(45) NULL,
   `Visit_City` VARCHAR(45) NULL,
   `Visit_Country` VARCHAR(45) NULL,
   `Visit_Region` VARCHAR(45) NULL,
   `Visit_Refer` VARCHAR(127) NULL,
+  `Visit_Date` VARCHAR(45) NULL,
+  `Visit_Time` VARCHAR(45) NULL,
+  `Visit_Exact_Path` VARCHAR(45) NULL,
   `Visit_Url_Id` INT NOT NULL,
   PRIMARY KEY (`Visit_Id`, `Visit_Url_Id`),
-  INDEX `fk_Visits_Urls1_idx` (`Visit_Url_Id` ASC),
+  INDEX `fk_Visits_Urls1_idx` (`Visit_Url_Id` ASC) VISIBLE,
   CONSTRAINT `fk_Visits_Urls1`
     FOREIGN KEY (`Visit_Url_Id`)
     REFERENCES `ursh`.`Urls` (`Url_Id`)
