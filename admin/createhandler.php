@@ -1,6 +1,7 @@
 <?php
 session_start();
-require("config.php");
+$root = realpath($_SERVER["DOCUMENT_ROOT"]);
+include ("$root/configs/config.php");
                 try {
                     $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWORD);
                 } catch (PDOException $e) {
