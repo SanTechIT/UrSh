@@ -32,6 +32,9 @@ switch ($url) {
     case "/favicon":
         exit();
         break;
+    case "/":
+        header("Location: /admin/index.php");
+        break;
     case "/GooGle":
         header("Location: https://google.com");
         break;

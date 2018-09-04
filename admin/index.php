@@ -73,6 +73,7 @@ $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http
     <div class="card clear-top">
         <div class="card-content">
             <span class="card-title">Create new Url</span>
+            <?php var_dump($_SESSION)?>
         </div>
     </div>
 </body>
