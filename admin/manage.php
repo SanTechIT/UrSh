@@ -76,14 +76,7 @@ $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http
             
             }
                 $_SESSION['err'] = 0;
-                $sth = $dbh->prepare("SELECT * from Urls WHERE Url_User_Id=:uid AND Url_Path = :path");
-                $sth->bindValue(':uid', $_SESSION['uid'],PDO::PARAM_INT);
-                $sth->bindValue(':path', $_GET['url'],PDO::PARAM_STR);
-                $sth->execute();
-                $urls = $sth->fetchAll();
-                var_dump($urls);
-                echo"<br>";
-                $sth = $dbh->prepare("select Visits.* from Urls join Visits ON Url_Id = Visits.Visit_Url_Id join Users ON Url_User_Id = Users.User_Id WHERE Users.User_Id = :uid AND Url_Path = :urlp");
+                $sth = $dbh->prepare("select Urls.*,Visits.* from Urls join Visits ON Url_Id = Visits.Visit_Url_Id join Users ON Url_User_Id = Users.User_Id WHERE Users.User_Id = :uid AND Url_Path = :urlp");
                 $sth->bindValue(':uid', $_SESSION['uid'],PDO::PARAM_INT);
                 $sth->bindValue(':urlp', $_GET['url'],PDO::PARAM_STR);
                 $sth->execute();
@@ -98,7 +91,7 @@ $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http
                 echo '<td> Url Clicks (TBA) </td>';
                 echo '<td> Manage Url </td>';
                 echo '</tr>';
-                foreach($urls as $url){
+                foreach($urlvisits as $url){
                     echo '<tr>';
                     echo '<td>' . $url['Url_Path'] . '</td>';
                     echo '<td>' . $url['Url_Link'] . '</td>';
