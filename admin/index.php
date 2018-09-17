@@ -71,6 +71,10 @@ $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http
                             break;
                         case 2:
                             echo "<p>You are missing something</p>";
+                        case 7:
+                            echo "<p>Custom Url is taken</p>";
+                        case 12:
+                            echo "<p> Please try again later </p>";
                         default;
                             echo "<p>Unknown Error </p>";
                             break;
@@ -85,54 +89,9 @@ $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http
             </form>
         </div>
     </div>
-    <div class="card clear-top" style="margin-top:25px;">
-        <div class="card-content">
-            <span class="card-title">Manage Urls</span>
-
-            <form method="POST" action="createlinkhandler.php">
-            <?php
-                if(isset($_SESSION['err'])){
-                    switch ($_SESSION['err']) {
-                        case 0:
-                            break;
-                        case 5:
-                            echo "<p>You are missing something</p>";
-                        default;
-                            echo "<p>Unknown Error </p>";
-                            break;
-                }
-            
-            }
-                $_SESSION['err'] = 0;
-                $sth = $dbh->prepare("SELECT * from Urls WHERE Url_User_Id=:uid");
-                $sth->bindValue(':uid', $_SESSION['uid'],PDO::PARAM_INT);
-                $sth->execute();
-                $urls = $sth->fetchAll();
-
-                $sth = $dbh->prepare("select Visits.* from Urls join Visits ON Url_Id = Visits.Visit_Url_Id join Users ON Url_User_Id = Users.User_Id WHERE User_Id = 2");
-                $sth->bindValue(':uid', $_SESSION['uid'],PDO::PARAM_INT);
-                $sth->execute();
-                $urlvisits = $sth->fetchAll();
-
-                var_dump($urlvisits);
-                echo '<br> <br>This will be more readable in the future I promise I will try<br>';
-                echo '<table>';
-                echo '<tr>';
-                echo '<td> Url Path </td>';
-                echo '<td> Url Link </td>';
-                echo '<td> Url Clicks (TBA) </td>';
-                echo '<td> Manage Url </td>';
-                echo '</tr>';
-                foreach($urls as $url){
-                    echo '<tr>';
-                    echo '<td>' . $url['Url_Path'] . '</td>';
-                    echo '<td>' . $url['Url_Link'] . '</td>';
-                    echo '<td>' . 'Count' . '</td>';
-                    echo '<td>' . '<a href="manage.php?url=' . $url['Url_Path'] . '">Manage</a>' . '</td>';
-                    echo '<tr>';
-                }
-            ?>
-            </form>
+    <div class="card clear-top" style="margin-top:80px;">
+        <div class="card-action">
+            <a class="card-title" href="manage.php">Manage Urls</a>
         </div>
     </div>
 </body>

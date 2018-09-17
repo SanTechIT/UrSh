@@ -57,7 +57,7 @@ $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http
     <span class="float-right logout-btn"><a href="/admin/logout.php">Logout</a></span>
     <span class="float-none"></span>
 </nav>
-    <div class="card clear-top" style="margin-top:80px;">
+<div class="card clear-top" style="margin-top:80px;">
         <div class="card-content">
             <span class="card-title">Manage Urls</span>
 
@@ -76,13 +76,16 @@ $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http
             
             }
                 $_SESSION['err'] = 0;
-                $sth = $dbh->prepare("select Urls.*,Visits.* from Urls join Visits ON Url_Id = Visits.Visit_Url_Id join Users ON Url_User_Id = Users.User_Id WHERE Users.User_Id = :uid AND Url_Path = :urlp");
+                $sth = $dbh->prepare("SELECT * from Urls WHERE Url_User_Id=:uid");
                 $sth->bindValue(':uid', $_SESSION['uid'],PDO::PARAM_INT);
-                $sth->bindValue(':urlp', $_GET['url'],PDO::PARAM_STR);
+                $sth->execute();
+                $urls = $sth->fetchAll();
+
+                $sth = $dbh->prepare("select Visits.* from Urls join Visits ON Url_Id = Visits.Visit_Url_Id join Users ON Url_User_Id = Users.User_Id WHERE User_Id = 2");
+                $sth->bindValue(':uid', $_SESSION['uid'],PDO::PARAM_INT);
                 $sth->execute();
                 $urlvisits = $sth->fetchAll();
 
-                var_dump($urlvisits);
                 echo '<br> <br>This will be more readable in the future I promise I will try<br>';
                 echo '<table>';
                 echo '<tr>';
@@ -91,12 +94,12 @@ $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http
                 echo '<td> Url Clicks (TBA) </td>';
                 echo '<td> Manage Url </td>';
                 echo '</tr>';
-                foreach($urlvisits as $url){
+                foreach($urls as $url){
                     echo '<tr>';
                     echo '<td>' . $url['Url_Path'] . '</td>';
                     echo '<td>' . $url['Url_Link'] . '</td>';
-                    echo '<td>' . count($urlvisits) . '</td>';
-                    echo '<td>' . '<a href="manage.php?url=' . $url['Url_Path'] . '">Manage</a>' . '</td>';
+                    echo '<td>' . 'Count' . '</td>';
+                    echo '<td>' . '<a href="manageurl.php?url=' . $url['Url_Path'] . '">Manage</a>' . '</td>';
                     echo '<tr>';
                 }
             ?>
