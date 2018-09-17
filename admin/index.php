@@ -24,19 +24,6 @@ if (isset($_SESSION["loggedIn"])){
 
 $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     /* https://stackoverflow.com/questions/6768793/get-the-full-url-in-php - ax. */
-    if(isset($_SESSION['err'])){
-        switch ($_SESSION['err']) {
-            case 0:
-                break;
-            echo "Permission Error<br>";
-                break;
-            default;
-                echo "Unknown Error <br>";
-                break;
-    }
-
-}
-    $_SESSION['err'] = 0;
     ?>
 <!doctype html>
 <html lang="en">
@@ -74,6 +61,30 @@ $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http
         <div class="card-content">
             <span class="card-title">Create new Url</span>
             <?php var_dump($_SESSION)?>
+
+            <form method="POST" action="createlinkhandler.php">
+            <?php
+                if(isset($_SESSION['err'])){
+                    switch ($_SESSION['err']) {
+                        case 0:
+                            break;
+                        case 3:
+                            echo "<p>Url was successfully created</p>";
+                            break;
+                        case 2:
+                            echo "<p>You are missing something</p>";
+                        default;
+                            echo "<p>Unknown Error </p>";
+                            break;
+                }
+            
+            }
+                $_SESSION['err'] = 0;
+            ?>
+                <input placeholder="URL" name="url" type="text" required>
+                <input placeholder="Custom Path (Optional)" name="path" type="text">
+                <label><input type="submit" value="submit" class="waves-effect waves-light btn fwid"></label>
+            </form>
         </div>
     </div>
 </body>

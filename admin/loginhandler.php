@@ -9,7 +9,7 @@ include ("$root/configs/config.php");
         echo "<p>Error connecting to database!</p>" . $e;
     } 
     if(isset($_POST['password']) && isset($_POST['username'])){
-        $sth = $dbh->prepare("SELECT * FROM Users WHERE username=:username LIMIT 1");
+        $sth = $dbh->prepare("SELECT * FROM Users WHERE username=:username AND User_Active = '1' LIMIT 1");
         $sth->bindValue(':username', $_POST['username']);
         $sth->execute();
         $user = $sth->fetchAll();

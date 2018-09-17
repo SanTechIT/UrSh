@@ -1,7 +1,6 @@
 <?php
 session_start();
 if (isset($_SESSION["loggedIn"])){
-    header("Location: /admin/index.php");
 } else {
     $_SESSION["loggedIn"] = false;
     $_SESSION["name"] = "";
