@@ -15,14 +15,14 @@ Core Functions
   - Check if URL is "Active" and if Owner of URL is "Active" DONE
   - Send user to url stored in database DONE
 
-  - If does not exsist, return error page CONDITIONAL
+  - If does not exsist, return error page DONE
 
 Admin Functions
 
 1. Login DONE
 2. Normal User WIP
-    A. Add / Manage / Delete Urls
-    B. See Stats on owned Urls
-3. Admin User
+    A. Add DONE / Manage WIP / Delete Urls TBS
+    B. See Stats on owned Urls WIP
+3. Admin User TBS
     A. Inherit Normal User
     B. Manage and freeze users

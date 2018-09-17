@@ -4,7 +4,7 @@
 */
 
 $root = realpath($_SERVER["DOCUMENT_ROOT"]);
-include ("$root/configs/config.php");
+require ("$root/configs/config.php");
 try {
     $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWORD);
 } catch (PDOException $e) {
@@ -34,6 +34,7 @@ switch ($url) {
         break;
     case "/":
         header("Location: /admin/index.php");
+        exit();
         break;
     case "/GooGle":
         header("Location: https://google.com");
@@ -67,8 +68,9 @@ echo '<br>' . date("m/d/Y");
 echo '<br>' . date("h:i:s");
 echo '<br>' . $_SERVER['HTTP_REFERER'];
 */
-
+/*
 if(Debug){
+    exit();
     echo '<br> Debug Enabled!';
     $sth = $dbh->prepare("INSERT INTO Visits (Visit_Ip,Visit_Url_Id,Visit_Date,Visit_Time,Visit_Exact_Path,Visit_Refer) VALUES (:bip,'1',:date,:time,:epath,:refer)");
     $sth->bindValue(':bip', $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
@@ -77,14 +79,16 @@ if(Debug){
     $sth->bindValue(':epath', $url, PDO::PARAM_STR);
     $sth->bindValue(':refer',$_SERVER['HTTP_REFERER'], PDO::PARAM_STR);
     $sth->execute();
+    
 }   
 else {
+*/
 if (isset($details->bogon)){
     /*
     IP is "Bogon" so GeoIP data is not avalible.
     */
     echo '<br> Bogon Ip!';
-    $sth = $dbh->prepare("INSERT INTO Visits (Visit_Ip,Visit_Url_Id,Visit_Date,Visit_Time,Visit_Exact_Path,Visit_Refer) VALUES (:bip,'1',:date,:time,:epath,:refer)");
+    $sth = $dbh->prepare("INSERT INTO Visits (Visit_Ip,Visit_Url_Id,Visit_Date,Visit_Time,Visit_Exact_Path,Visit_Refer) VALUES (:bip,:urlid,:date,:time,:epath,:refer)");
     $sth->bindValue(':bip', $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
     $sth->bindValue(':date', date("m/d/Y"), PDO::PARAM_STR);
     $sth->bindValue(':time', date("h:i:s"), PDO::PARAM_STR);
@@ -102,16 +106,18 @@ if (isset($details->bogon)){
     Visits not being recorded? Check if your server is connected to the internet or if the GeoIp service is down ipinfo.io
     */
     //echo '<br> Regular Ip';
-    $sth = $dbh->prepare("INSERT INTO Visits (Visit_Ip,Visit_Url_Id,Visit_Date,Visit_Time,Visit_Exact_Path,Visit_Refer) VALUES (:ip,'1',:date,:time,:epath,:refer)");
+    $sth = $dbh->prepare("INSERT INTO Visits (Visit_Ip,Visit_Url_Id,Visit_Date,Visit_Time,Visit_Exact_Path,Visit_Refer) VALUES (:ip,:urlid,:date,:time,:epath,:refer)");
     $sth->bindValue(':ip', $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
     $sth->bindValue(':date', date("m/d/Y"), PDO::PARAM_STR);
     $sth->bindValue(':time', date("h:i:s"), PDO::PARAM_STR);
+    $sth->bindValue(':urlid', $dburl[0]['Url_Id'],PDO::PARAM_STR);
     $sth->bindValue(':epath', $url, PDO::PARAM_STR);
     $sth->bindValue(':refer',$_SERVER['HTTP_REFERER'], PDO::PARAM_STR);
     $sth->execute();
 }
+/*
 }
-
+*/
 if (count($dburl) != 0){
     /* Add thing to record user info*/
     header("Location: " . $dburl[0]['Url_Link']);
@@ -169,15 +175,15 @@ Core Functions
   - Check if URL is "Active" and if Owner of URL is "Active" DONE
   - Send user to url stored in database DONE
 
-  - If does not exsist, return error page CONDITIONAL
+  - If does not exsist, return error page DONE
 
 Admin Functions
 
 1. Login DONE
 2. Normal User WIP
-    A. Add / Manage / Delete Urls
-    B. See Stats on owned Urls
-3. Admin User
+    A. Add DONE / Manage WIP / Delete Urls TBS
+    B. See Stats on owned Urls WIP
+3. Admin User TBS
     A. Inherit Normal User
     B. Manage and freeze users
  */

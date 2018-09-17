@@ -48,7 +48,7 @@ $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http
     </style>
 </head>
 <body>
-<nav>
+<nav class="light-green darken-3">
     <span>
         <h5 class="float-left title isplay-inline-block">
             UrSh Admin
@@ -57,11 +57,9 @@ $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http
     <span class="float-right logout-btn"><a href="/admin/logout.php">Logout</a></span>
     <span class="float-none"></span>
 </nav>
-    <div class="card clear-top">
+    <div class="card clear-top" style="margin-top:80px;">
         <div class="card-content">
             <span class="card-title">Create new Url</span>
-            <?php var_dump($_SESSION)?>
-
             <form method="POST" action="createlinkhandler.php">
             <?php
                 if(isset($_SESSION['err'])){
@@ -84,6 +82,56 @@ $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http
                 <input placeholder="URL" name="url" type="text" required>
                 <input placeholder="Custom Path (Optional)" name="path" type="text">
                 <label><input type="submit" value="submit" class="waves-effect waves-light btn fwid"></label>
+            </form>
+        </div>
+    </div>
+    <div class="card clear-top" style="margin-top:25px;">
+        <div class="card-content">
+            <span class="card-title">Manage Urls</span>
+
+            <form method="POST" action="createlinkhandler.php">
+            <?php
+                if(isset($_SESSION['err'])){
+                    switch ($_SESSION['err']) {
+                        case 0:
+                            break;
+                        case 5:
+                            echo "<p>You are missing something</p>";
+                        default;
+                            echo "<p>Unknown Error </p>";
+                            break;
+                }
+            
+            }
+                $_SESSION['err'] = 0;
+                $sth = $dbh->prepare("SELECT * from Urls WHERE Url_User_Id=:uid");
+                $sth->bindValue(':uid', $_SESSION['uid'],PDO::PARAM_INT);
+                $sth->execute();
+                $urls = $sth->fetchAll();
+
+                $sth = $dbh->prepare("select Visits.* from Urls join Visits ON Url_Id = Visits.Visit_Url_Id join Users ON Url_User_Id = Users.User_Id WHERE User_Id = 2");
+                $sth->bindValue(':uid', $_SESSION['uid'],PDO::PARAM_INT);
+                $sth->execute();
+                $urlvisits = $sth->fetchAll();
+
+                var_dump($urlvisits);
+                echo '<br> <br>This will be more readable in the future I promise I will try<br>';
+                echo '<table>';
+                echo '<tr>';
+                echo '<td> Url Path </td>';
+                echo '<td> Url Link </td>';
+                echo '<td> Url Clicks (TBA) </td>';
+                echo '<td> Manage Url </td>';
+                echo '</tr>';
+                foreach($urls as $url){
+                    echo '<tr>';
+                    echo '<td>' . $url['Url_Path'] . '</td>';
+                    echo '<td>' . $url['Url_Link'] . '</td>';
+                    echo '<td>' . 'clickcount' . '</td>';
+                    echo '<td>' . 'Manage Url' . '</td>';
+                    echo '<tr>';
+                }
+            ?>
             </form>
         </div>
     </div>
