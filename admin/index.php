@@ -127,8 +127,8 @@ $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http
                     echo '<tr>';
                     echo '<td>' . $url['Url_Path'] . '</td>';
                     echo '<td>' . $url['Url_Link'] . '</td>';
-                    echo '<td>' . 'clickcount' . '</td>';
-                    echo '<td>' . 'Manage Url' . '</td>';
+                    echo '<td>' . 'Count' . '</td>';
+                    echo '<td>' . '<a href="manage.php?url=' . $url['Url_Path'] . '">Manage</a>' . '</td>';
                     echo '<tr>';
                 }
             ?>
