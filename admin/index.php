@@ -82,6 +82,10 @@ $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http
             
             }
                 $_SESSION['err'] = 0;
+                if(strlen($_SESSION['meta']) > 1){
+                echo '<p> Your Link is: <a href="' . Host . $_SESSION['meta'] .'">' . Host . $_SESSION['meta'] . '</a> </p>';
+                $_SESSION['meta'] = "";
+                }
             ?>
                 <input placeholder="URL" name="url" type="text" required>
                 <input placeholder="Custom Path (Optional)" name="path" type="text">

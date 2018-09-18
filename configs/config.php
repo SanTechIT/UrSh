@@ -5,4 +5,5 @@ define('DB_USER', 'root');
 define('DB_PASSWORD', 'bakanakoto123');
 //Global Settings
 define('Debug', 'false'); // For Development (You probably dont need this) 
+define('Host','https://localhost');
 ?>

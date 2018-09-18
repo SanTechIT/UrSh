@@ -106,6 +106,7 @@ if($user[0]['User_Active'] == 1){
                 $sth->bindValue(':uid', $_SESSION['uid'],PDO::PARAM_INT);
                 $sth->execute();
                 $_SESSION['err'] = 3;
+                $_SESSION['meta'] = $path;
                 header("Location: /admin/index.php");
             } 
             catch (PDOException $e){
