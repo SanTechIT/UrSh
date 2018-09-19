@@ -24,5 +24,5 @@ Admin Functions
     A. Add DONE / Manage WIP / Delete Urls DONE
     B. See Stats on owned Urls BASIC
 3. Admin User TBS
-    A. Inherit Normal User
-    B. Manage and freeze users
+    A. Inherit Normal User DONE
+    B. Manage and freeze users TBS 
