@@ -51,7 +51,9 @@ $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http
 <nav class="light-green darken-3">
     <span>
         <h5 class="float-left title isplay-inline-block">
+            <a href="index.php">
             UrSh Admin
+            </a>
         </h5>
     </span>
     <span class="float-right logout-btn"><a href="/admin/logout.php">Logout</a></span>
@@ -80,12 +82,12 @@ $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http
                 $sth->bindValue(':uid', $_SESSION['uid'],PDO::PARAM_INT);
                 $sth->execute();
                 $urls = $sth->fetchAll();
-
-                $sth = $dbh->prepare("select Visits.* from Urls join Visits ON Url_Id = Visits.Visit_Url_Id join Users ON Url_User_Id = Users.User_Id WHERE User_Id = 2");
+                /*
+                $sth = $dbh->prepare("select Visits.* from Urls join Visits ON Url_Id = Visits.Visit_Url_Id join Users ON Url_User_Id = Users.User_Id WHERE User_Id = :uid");
                 $sth->bindValue(':uid', $_SESSION['uid'],PDO::PARAM_INT);
                 $sth->execute();
                 $urlvisits = $sth->fetchAll();
-
+                */
                 echo '<br> <br>This will be more readable in the future I promise I will try<br>';
                 echo '<table>';
                 echo '<tr>';

@@ -22,9 +22,21 @@ if (isset($_SESSION["loggedIn"])){
     exit();
 }
 
-$url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-    /* https://stackoverflow.com/questions/6768793/get-the-full-url-in-php - ax. */
-    ?>
+    $sth = $dbh->prepare("Select Visits.* from Urls join Visits ON Url_Id = Visits.Visit_Url_Id join Users ON Url_User_Id = Users.User_Id WHERE Users.User_Id = :uid AND Url_Path = :urlp");
+    $sth->bindValue(':uid', $_SESSION['uid'],PDO::PARAM_INT);
+    $sth->bindValue(':urlp', $_GET['url'],PDO::PARAM_STR);
+    $sth->execute();
+    $urlvisits = $sth->fetchAll();
+
+    $sth = $dbh->prepare("Select Urls.* from Urls join Users ON Url_User_Id = Users.User_Id WHERE Users.User_Id = :uid AND Url_Path = :urlp");
+    $sth->bindValue(':uid', $_SESSION['uid'],PDO::PARAM_INT);
+    $sth->bindValue(':urlp', $_GET['url'],PDO::PARAM_STR);
+    $sth->execute();
+    $urlinfo = $sth->fetchAll();
+    if(count($urlinfo) == 0){
+        header("Location: /admin/manage.php");
+    }
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -35,6 +47,16 @@ $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http
     <script src="/js/materialize.min.js"></script>
     <link href="/css/materialize.min.css" rel="stylesheet" type="text/css">
     <link href="/css/primary.css" rel="stylesheet" type="text/css">
+    <script>
+        $(document).ready(function() {
+            $(".deleteurl").click((event) => {
+                $(".confirm").toggleClass("hidden");
+            });
+            $(".deleteurlno").click((event) => {
+                $(".confirm").toggleClass("hidden");
+            });
+        });
+    </script>
     <style>
     .logout-btn {
         margin-right:15px;
@@ -48,18 +70,40 @@ $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http
     </style>
 </head>
 <body>
-<nav class="light-green darken-3">
+<nav class="light-green darken-3" href="index.php" href="index.php">
     <span>
         <h5 class="float-left title isplay-inline-block">
+            <a href="index.php">
             UrSh Admin
+            </a>
         </h5>
     </span>
     <span class="float-right logout-btn"><a href="/admin/logout.php">Logout</a></span>
     <span class="float-none"></span>
 </nav>
-    <div class="card clear-top" style="margin-top:80px;">
+<div class="card">
+    <div class="card-content" style="margin-top:80px;">
+    <span class="card-title">Url Data</span>
+        <?php
+        echo '<p> Total Clicks: ' . count($urlvisits) . '</p>';
+        ?>
+    </div>
+    <div class="card-action">
+        <a class="deleteurl">Delete</a>
+    </div>
+</div>
+<div class="card hidden confirm" style="width:90%; position:absolute; z-index:100; margin-left:5%;">
+    <div class="card-content" style="margin-top:80px;">
+    <span class="card-title">Are you sure you want to delete this Url?</span>
+    </div>
+    <div class="card-action">
+        <a class="deleteurlyes" href="deleteurlhandler.php?id=<?php echo $urlinfo[0]['Url_Id']; ?>">Yes</a>
+        <a class="deleteurlno">Cancel</a>
+    </div>
+</div>
+    <div class="card clear-top" style="margin-top:30px;">
         <div class="card-content">
-            <span class="card-title">Manage Urls</span>
+            <span class="card-title">Click Data</span>
 
             <form method="POST" action="createlinkhandler.php">
             <?php
@@ -76,27 +120,19 @@ $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http
             
             }
                 $_SESSION['err'] = 0;
-                $sth = $dbh->prepare("select Urls.*,Visits.* from Urls join Visits ON Url_Id = Visits.Visit_Url_Id join Users ON Url_User_Id = Users.User_Id WHERE Users.User_Id = :uid AND Url_Path = :urlp");
-                $sth->bindValue(':uid', $_SESSION['uid'],PDO::PARAM_INT);
-                $sth->bindValue(':urlp', $_GET['url'],PDO::PARAM_STR);
-                $sth->execute();
-                $urlvisits = $sth->fetchAll();
-
-                var_dump($urlvisits);
-                echo '<br> <br>This will be more readable in the future I promise I will try<br>';
+        
+                // var_dump($urlvisits);
                 echo '<table>';
                 echo '<tr>';
-                echo '<td> Url Path </td>';
-                echo '<td> Url Link </td>';
-                echo '<td> Url Clicks (TBA) </td>';
-                echo '<td> Manage Url </td>';
+                echo '<td> Visit Date </td>';
+                echo '<td> Visit Time </td>';
+                echo '<td> Ip </td>';
                 echo '</tr>';
-                foreach($urlvisit as $url){
+                foreach($urlvisits as $url){
                     echo '<tr>';
-                    echo '<td>' . $url['Url_Path'] . '</td>';
-                    echo '<td>' . $url['Url_Link'] . '</td>';
-                    echo '<td>' . count($urlvisits) . '</td>';
-                    echo '<td>' . '<a href="manage.php?url=' . $url['Url_Path'] . '">Manage</a>' . '</td>';
+                    echo '<td>' . $url['Visit_Date'] . '</td>';
+                    echo '<td>' . $url['Visit_Time'] . '</td>';
+                    echo '<td>' . $url['Visit_Ip'] . '</td>';
                     echo '<tr>';
                 }
             ?>

@@ -127,3 +127,6 @@ nav {
 .nm {
 	margin:0;
 }
+.hidden {
+	display: none;
+}
