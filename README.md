@@ -20,9 +20,9 @@ Core Functions
 Admin Functions
 
 1. Login DONE
-2. Normal User WIP
-    A. Add DONE / Manage WIP / Delete Urls TBS
-    B. See Stats on owned Urls WIP
+2. Normal User PASS
+    A. Add DONE / Manage WIP / Delete Urls DONE
+    B. See Stats on owned Urls BASIC
 3. Admin User TBS
     A. Inherit Normal User
     B. Manage and freeze users
