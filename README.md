@@ -5,6 +5,8 @@ A lightweight and powerfull PHP url shortener built for Apache!
 Note, May use geoip data from ipinfo.io. It is suggested that you use your own service. (code expects data in json format / Is not implemented)
 
 ## Progress
+
+# State: Workable, Development Paused.
 Core Functions
 
 1. Get url DONE
