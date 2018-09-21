@@ -27,13 +27,34 @@ $url= explode('.',$values['path'])[0];
 
 switch ($url) {
     case "/admin/":
-        header("Location: /admin/index.php");
+        header("Location: /admin/index");
         break;
-    case "/favicon":
+    case "/admin/index":
+        include ("$root/admin/index.php");
+        exit();
+        break;
+    case "/admin/manage":
+        include ("$root/admin/manage.php");
+        exit();
+        break;
+    case "/admin/manageurl":
+        include ("$root/admin/manageurl.php");
+        exit();
+        break;
+    case "/admin/login":
+        include ("$root/admin/login.php");
+        exit();
+        break;
+    case "/admin/logout":
+        include ("$root/admin/logout.php");
         exit();
         break;
     case "/":
-        header("Location: /admin/index.php");
+        header("Location: /admin/index");
+        exit();
+        break;
+
+    case "/favicon":
         exit();
         break;
     case "/GooGle":

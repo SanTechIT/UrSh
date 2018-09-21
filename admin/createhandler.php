@@ -14,7 +14,7 @@ include ("$root/configs/config.php");
                     $usr = $sth->fetchAll();
                 } else {
                     $_SESSION['err'] = 2;
-                    header("Location: /admin/login.php");
+                    header("Location: /admin/login");
                 }
                 if(count($usr) == 0){
                     if(isset($_POST['first_name']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['email'])){
@@ -31,18 +31,18 @@ include ("$root/configs/config.php");
                                 }
                                 $sth->execute();
                                 $_SESSION['err'] = 0;
-                                header("Location: /admin/login.php");
+                                header("Location: /admin/login");
                             } 
                             catch (PDOException $e){
                                 $_SESSION['err'] = 9;
-                                header("Location: /admin/login.php");
+                                header("Location: /admin/login");
                         }
                     } else {
                         $_SESSION['err'] = 2;
-                        header("Location: /admin/login.php");
+                        header("Location: /admin/login");
                     }
                 } else {
                     $_SESSION['err'] = 10;
-                    header("Location: /admin/login.php");
+                    header("Location: /admin/login");
                 } 
             ?>

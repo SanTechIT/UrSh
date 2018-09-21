@@ -40,7 +40,7 @@ if (isset($_SESSION["loggedIn"])){
         <span class="user float-right">
             <?php
                 if($_SESSION['loggedIn'] == true){
-                    echo '<a href="/rchang/p2/profile.php">' . htmlspecialchars($_SESSION["name"]) . '</a>';
+                    echo '<a href="/admin/index">' . htmlspecialchars($_SESSION["name"]) . '</a>';
                 } else {
                 }
             ?>

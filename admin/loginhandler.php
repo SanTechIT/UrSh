@@ -19,18 +19,18 @@ include ("$root/configs/config.php");
             $_SESSION["name"] = $user[0]['User_First_Name'];
             $_SESSION["uid"] = $user[0]['User_Id'];
             $_SESSION['isAdmin'] = $user[0]['User_Admin'];
-            header("Location: /admin/index.php");
+            header("Location: /admin/index");
         } else {
             $_SESSION['err'] = 1;
-            header("Location: /admin/login.php");
+            header("Location: /admin/login");
         }
     } else {
         $_SESSION['err'] = 1;
-        header("Location: /admin/login.php");
+        header("Location: /admin/login");
     }
 }
 else {
     $_SESSION['err'] = 2;
-    header("Location: /admin/login.php");
+    header("Location: /admin/login");
 }
 ?>

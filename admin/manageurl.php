@@ -13,12 +13,12 @@ if (isset($_SESSION["loggedIn"])){
     if($_SESSION["loggedIn"]) {
 
     } else {
-        header("Location: /admin/login.php");
+        header("Location: /admin/login");
         exit();
     }
 } else {
     $_SESSION["loggedIn"] = false;
-    header("Location: /admin/login.php");
+    header("Location: /admin/login");
     exit();
 }
 
@@ -34,7 +34,7 @@ if (isset($_SESSION["loggedIn"])){
     $sth->execute();
     $urlinfo = $sth->fetchAll();
     if(count($urlinfo) == 0){
-        header("Location: /admin/manage.php");
+        header("Location: /admin/manage");
     }
 ?>
 <!doctype html>
@@ -70,15 +70,15 @@ if (isset($_SESSION["loggedIn"])){
     </style>
 </head>
 <body>
-<nav class="light-green darken-3" href="index.php" href="index.php">
+<nav class="light-green darken-3" href="index" href="index">
     <span>
         <h5 class="float-left title isplay-inline-block">
-            <a href="index.php">
+            <a href="index">
             UrSh Admin
             </a>
         </h5>
     </span>
-    <span class="float-right logout-btn"><a href="/admin/logout.php">Logout</a></span>
+    <span class="float-right logout-btn"><a href="/admin/logout">Logout</a></span>
     <span class="float-none"></span>
 </nav>
 <div class="card">
@@ -105,7 +105,7 @@ if (isset($_SESSION["loggedIn"])){
         <div class="card-content">
             <span class="card-title">Click Data</span>
 
-            <form method="POST" action="createlinkhandler.php">
+            <form method="POST" action="createlinkhandler">
             <?php
                 if(isset($_SESSION['err'])){
                     switch ($_SESSION['err']) {

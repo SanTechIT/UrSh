@@ -13,12 +13,12 @@ if (isset($_SESSION["loggedIn"])){
     if($_SESSION["loggedIn"]) {
 
     } else {
-        header("Location: /admin/login.php");
+        header("Location: /admin/login");
         exit();
     }
 } else {
     $_SESSION["loggedIn"] = false;
-    header("Location: /admin/login.php");
+    header("Location: /admin/login");
     exit();
 }
 
@@ -54,7 +54,7 @@ $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http
             UrSh Admin
         </h5>
     </span>
-    <span class="float-right logout-btn"><a href="/admin/logout.php">Logout</a></span>
+    <span class="float-right logout-btn"><a href="/admin/logot">Logout</a></span>
     <span class="float-none"></span>
 </nav>
     <div class="card clear-top" style="margin-top:80px;">
@@ -95,7 +95,7 @@ $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http
     </div>
     <div class="card clear-top" style="margin-top:80px;">
         <div class="card-action">
-            <a class="card-title" href="manage.php">Manage Urls</a>
+            <a class="card-title" href="manage">Manage Urls</a>
         </div>
     </div>
 </body>

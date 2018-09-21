@@ -1,6 +1,8 @@
 <?php
 session_start();
-require("config.php");
+$root = realpath($_SERVER["DOCUMENT_ROOT"]);
+include ("$root/configs/config.php");
+
 if (isset($_SESSION['loggedIn'])){
 if($_SESSION['loggedIn']){
 } else {
@@ -78,17 +80,10 @@ if($user[0]['User_Active'] == 1){
                 while ($isUnique){
                     /* If too many failures, generate string with higher count */
                     if($count > 5){
-                        $path = '/' . generateRandomString(6);
-                        $sth = $dbh->prepare("SELECT * from Urls where Url_Path = :path;");
-                        $sth->bindValue(':path', $path,PDO::PARAM_INT);
-                        $sth->execute();
-                        $urllist = $sth->fetchAll();
-                        if($count > 10){
-                            $_SESSION['err'] = 12;
-                            header("Location: /admin/index.php");
-                        }
+                        $_SESSION['err'] = 12;
+                        header("Location: /admin/index.php");
                     } 
-                    $path = '/' . generateRandomString(5);
+                    $path = '/' . generateRandomString(generateLinkLength);
                     $sth = $dbh->prepare("SELECT * from Urls where Url_Path = :path;");
                     $sth->bindValue(':path', $path,PDO::PARAM_INT);
                     $sth->execute();
@@ -125,5 +120,4 @@ if($user[0]['User_Active'] == 1){
         exit();
 }
 header("Location: /admin/index.php");
-
 ?>

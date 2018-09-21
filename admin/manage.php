@@ -13,12 +13,12 @@ if (isset($_SESSION["loggedIn"])){
     if($_SESSION["loggedIn"]) {
 
     } else {
-        header("Location: /admin/login.php");
+        header("Location: /admin/login");
         exit();
     }
 } else {
     $_SESSION["loggedIn"] = false;
-    header("Location: /admin/login.php");
+    header("Location: /admin/login");
     exit();
 }
 
@@ -51,19 +51,19 @@ $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http
 <nav class="light-green darken-3">
     <span>
         <h5 class="float-left title isplay-inline-block">
-            <a href="index.php">
+            <a href="index">
             UrSh Admin
             </a>
         </h5>
     </span>
-    <span class="float-right logout-btn"><a href="/admin/logout.php">Logout</a></span>
+    <span class="float-right logout-btn"><a href="/admin/logout">Logout</a></span>
     <span class="float-none"></span>
 </nav>
 <div class="card clear-top" style="margin-top:80px;">
         <div class="card-content">
             <span class="card-title">Manage Urls</span>
 
-            <form method="POST" action="createlinkhandler.php">
+            <form method="POST" action="createlinkhandler">
             <?php
                 if(isset($_SESSION['err'])){
                     switch ($_SESSION['err']) {
@@ -101,7 +101,7 @@ $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http
                     echo '<td>' . $url['Url_Path'] . '</td>';
                     echo '<td>' . $url['Url_Link'] . '</td>';
                     echo '<td>' . 'Count' . '</td>';
-                    echo '<td>' . '<a href="manageurl.php?url=' . $url['Url_Path'] . '">Manage</a>' . '</td>';
+                    echo '<td>' . '<a href="manageurl?url=' . $url['Url_Path'] . '">Manage</a>' . '</td>';
                     echo '<tr>';
                 }
             ?>

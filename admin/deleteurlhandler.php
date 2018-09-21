@@ -33,19 +33,19 @@ if(count($check) != 0){
             } 
             catch (PDOException $e){
                 $_SESSION['err'] = 9;
-                header("Location: /admin/index.php");
+                header("Location: /admin/index");
                 exit();
         }
     } else {
         $_SESSION['err'] = 2;
-        header("Location: /admin/manage.php");
+        header("Location: /admin/manage");
         exit();
     } 
 } else {
     $_SESSION['err'] = 3;
-        header("Location: /admin/logout.php");
+        header("Location: /admin/logout");
         exit();
 }
-header("Location: /admin/manage.php");
+header("Location: /admin/manage");
 
 ?>
