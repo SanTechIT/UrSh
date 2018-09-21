@@ -2,6 +2,8 @@
 A lightweight and powerfull PHP url shortener built for Apache!
 - If needed, This should work with any web server that has an equivilant of a rewrite module.
 
+### Known errors:
+- Url cannot be deleted if it been visited (Sql Forgienkey Constraints)
 Note, May use geoip data from ipinfo.io. It is suggested that you use your own service. (code expects data in json format / Is not implemented)
 
 ## Progress
